@@ -83,7 +83,7 @@ function onInforSucceed(content) {
 
   // Information
   var content = '<h3><a id="link" href="' + url + '">' + infor['fulltitle'] + '</a></h3>'
-    + '<p><img src="' + infor['thumbnail'] + '" /></p>'
+    + '<p><div id="thumbnail"><img src="' + infor['thumbnail'] + '" /></div></p>'
     + '<h3>Duration: ' + infor['duration'] + ' seconds</h3>'
     + '</div>';
 
@@ -156,6 +156,20 @@ function sendInforRequest(url) {
  * Convertion
  */
 
+function getExtension(url) {
+
+  var exts = ['mp4', 'webm', 'ogg', 'mp3', 'wav'];
+  var types = ['mp4', 'webm', 'ogg', 'mpeg', 'wav'];
+
+  for (var i = 0; i < exts.length; i ++) {
+    if (url.endsWith(exts[i])) {
+      return types[i];
+    }
+  }
+
+  return null;
+}
+
 function onConvertionSucceed(url, content) {
 
   var obj = JSON.parse(content);
@@ -163,11 +177,26 @@ function onConvertionSucceed(url, content) {
   var data = obj['data'];
 
   if (0 != error['code']) {
-    onConvertionError(url, data['log']); 
+    onConvertionError(url, data['log']);
     return;
   }
 
-  document.getElementById('link').href = 'files/' + data['url'];
+  var mediaUrl = 'files/' + data['url'];
+
+  document.getElementById('link').href = mediaUrl;
+
+  var mediatype = getExtension(mediaUrl);
+
+  if (null != mediatype) {
+
+    var type = data['type'];
+    var content = '<' + type + ' controls>'
+      + '<source src="' + mediaUrl + '" type="' + type + '/' + mediatype + '">'
+      + 'Your browser does not support the ' + type + ' tag.'
+      + '</' + type + '>';
+
+    document.getElementById('thumbnail').innerHTML = content;
+  }
 
   var content = '<h3>' + url + ' is converted.</h3>';
   document.getElementById('notification').innerHTML = content;
@@ -197,7 +226,7 @@ function sendRequest(url, type, names, values) {
     if (200 === xhr.status) {
       onConvertionSucceed(url, xhr.responseText);
     } else {
-      onConvertionError(url); 
+      onConvertionError(url);
     }
   };
 

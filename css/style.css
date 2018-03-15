@@ -21,6 +21,10 @@ img {
   width: 100%;
   z-index: 0;
 }
+video {
+  width: 100%;
+  z-index: 0;
+}
 input[type='text'] {
   width: 100%;
   border-radius: 2px;

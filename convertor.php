@@ -44,9 +44,12 @@ $options = '';
 
 if ('normal' == $type) {
 
+	$type = 'video';
 	$format = getParamOrExit('normal');
 
 } elseif ('video+audio' == $type) {
+
+	$type = 'video';
 
 	$video = getParamOrExit('video');
 	$audio = getParamOrExit('audio');
@@ -79,7 +82,7 @@ $filename = getLastModifiedFile($savePath);
 $log = implode('\n', $retval);
 $log = str_replace("\r", '', $log);
 
-$data = "{\"duration\": $duration, \"url\": \"$filename\", \"log\": \"$log\"}";
+$data = "{\"originalurl\": \"$url\", \"type\": \"$type\", \"url\": \"$filename\", \"duration\": $duration, \"log\": \"$log\"}";
 
 if (isSucceeded($retval)) {
 	echo(Rpc::onSucceed($data));
