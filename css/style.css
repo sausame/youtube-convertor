@@ -21,8 +21,8 @@ img {
   width: 100%;
   z-index: 0;
 }
-input[type='text'], input[type='email'], input[type='password'] {
-  width: 400px;
+input[type='text'] {
+  width: 100%;
   border-radius: 2px;
   border: 1px solid #CCC;
   padding: 10px;
@@ -31,6 +31,7 @@ input[type='text'], input[type='email'], input[type='password'] {
   margin-top: 10px;
 }
 input[type='submit']{
+  width: 100%;
   padding: 10px 25px 8px;
   color: #fff;
   background-color: #0067ab;
