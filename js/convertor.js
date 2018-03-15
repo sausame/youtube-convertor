@@ -182,9 +182,6 @@ function onConvertionSucceed(url, content) {
   }
 
   var mediaUrl = 'files/' + data['url'];
-
-  document.getElementById('link').href = mediaUrl;
-
   var mediatype = getExtension(mediaUrl);
 
   if (null != mediatype) {
@@ -196,6 +193,8 @@ function onConvertionSucceed(url, content) {
       + '</' + type + '>';
 
     document.getElementById('thumbnail').innerHTML = content;
+  } else {
+    document.getElementById('link').href = mediaUrl;
   }
 
   var content = '<h3>' + url + ' is converted.</h3>';
