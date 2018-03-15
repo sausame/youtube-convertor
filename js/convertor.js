@@ -82,7 +82,7 @@ function onInforSucceed(content) {
   var url = infor['webpage_url'];
 
   // Information
-  var content = '<h3><a href="' + url + '">' + infor['fulltitle'] + '</a></h3>'
+  var content = '<h3><a id="link" href="' + url + '">' + infor['fulltitle'] + '</a></h3>'
     + '<p><img src="' + infor['thumbnail'] + '" /></p>'
     + '<h3>Duration: ' + infor['duration'] + ' seconds</h3>'
     + '</div>';
@@ -158,16 +158,27 @@ function sendInforRequest(url) {
  * Convertion
  */
 
-function onConvertionSucceed(url) {
-  var content = '<h3>' + url + ' is converted.</h3>';
+function onConvertionSucceed(url, content) {
 
+  var obj = JSON.parse(content);
+  var error = obj['error'];
+  var data = obj['data'];
+
+  if (0 != error['code']) {
+    onConvertionError(url, data['log']); 
+    return;
+  }
+
+  document.getElementById('link').href = 'files/' + data['url'];
+
+  var content = '<h3>' + url + ' is converted.</h3>';
   document.getElementById('notification').innerHTML = content;
   document.getElementById('convertor').style.display = 'block';
   document.getElementById('selection').style.display = 'none';
 }
 
-function onConvertionError(url) {
-  var content = '<h3>Convertion is failed for ' + url + '.</h3>';
+function onConvertionError(url, log='') {
+  var content = '<h3>Convertion is failed for ' + url + '.</h3><pre>' + log + '</pre>';
 
   document.getElementById('notification').innerHTML = content;
   document.getElementById('convertor').style.display = 'block';
@@ -188,7 +199,7 @@ function sendRequest(url, type, names, values) {
     var content = '';
 
     if (200 === xhr.status) {
-      onConvertionSucceed(url);
+      onConvertionSucceed(url, xhr.responseText);
     } else {
       onConvertionError(url); 
     }
