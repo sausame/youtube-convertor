@@ -8,10 +8,13 @@ body {
   clear: both;
 }
 a {
-  color:#0067ab; text-decoration:none;
+  color: #0067ab;
+  text-decoration: none;
 }
 a:hover {
   text-decoration:underline;
+  background: #0067ab;
+  color: #FFF;
 }
 .form {
   width: 300px;
