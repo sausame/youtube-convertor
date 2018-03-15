@@ -72,7 +72,7 @@ $config = parse_ini_file('config.ini');
 $envPath = $config['env-path'];
 $savePath = $config['save-path'];
 
-$cmd = "export PATH=$envPath:\$PATH && youtube-dl -f $format $options -o '$savePath/%(title)s.%(ext)s' '$url'";
+$cmd = "export LC_ALL=en_US.UTF-8 && export PATH=$envPath:\$PATH && youtube-dl -f $format $options -o '$savePath/%(title)s.%(ext)s' '$url'";
 
 $now = time();
 exec($cmd, $retval);
