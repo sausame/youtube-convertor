@@ -1,5 +1,8 @@
 <?php
 
+require('files.php');
+require('rpc.php');
+
 function getParamOrExit($name) {
 
 	$value = '';
@@ -16,6 +19,22 @@ function getParamOrExit($name) {
 
 	http_response_code(302);
 	exit();
+}
+
+function isSucceeded($retval) {
+
+	foreach ($retval as $value) {
+
+		$pos = strpos($value, 'Destination:');
+
+		if (false === $pos) {
+			continue;
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 $url = getParamOrExit('url');
@@ -48,10 +67,24 @@ if ('normal' == $type) {
 
 $config = parse_ini_file('config.ini');
 $envPath = $config['env-path'];
+$savePath = $config['save-path'];
 
-$cmd = "export PATH=$envPath:\$PATH && youtube-dl -f $format $options '$url'";
-echo(date('Y-m-d H:i:s'));
-system($cmd, $retval);
-echo(date('Y-m-d H:i:s'));
+$cmd = "export PATH=$envPath:\$PATH && youtube-dl -f $format $options -o '$savePath/%(title)s.%(ext)s' '$url'";
+
+$now = time();
+exec($cmd, $retval);
+$duration = time() - $now;
+
+$filename = getLastModifiedFile($savePath);
+$log = implode("\n", $retval);
+
+$data = "{\"duration\": $duration, \"url\": \"$filename\", \"log\": \"$log\"}";
+
+if (isSucceeded($retval)) {
+	echo(Rpc::onSucceed($data));
+} else {
+	echo(Rpc::onError($data));
+}
+
 ?>
 
