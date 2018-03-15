@@ -76,7 +76,8 @@ exec($cmd, $retval);
 $duration = time() - $now;
 
 $filename = getLastModifiedFile($savePath);
-$log = implode("\n", $retval);
+$log = implode('\n', $retval);
+$log = str_replace("\r", '', $log);
 
 $data = "{\"duration\": $duration, \"url\": \"$filename\", \"log\": \"$log\"}";
 
