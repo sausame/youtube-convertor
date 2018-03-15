@@ -102,8 +102,7 @@ function onInforSucceed(content) {
     var id = 'id-' + index;
     var types = categories[index];
 
-    content += '<div id="' + id + '">'
-      + '<h2>' + names[index].toUpperCase() + '</h2>';
+    content += '<div id="' + id + '">';
 
     for (var i = 0; i < types.length; i ++) {
       content += getGroup(id, types[i], infor[types[i]]);
@@ -113,7 +112,7 @@ function onInforSucceed(content) {
       content += getAudioQualities();
     }
 
-    content += '<input type="submit" value="Convert ' + names[index] + '" onclick="convert(\'' + url + '\', \'' + names[index] + '\', \'' + id + '\', ' + numbers[index] + '); return false;" />'
+    content += '<p><input type="submit" value="Convert ' + names[index].toUpperCase() + '" onclick="convert(\'' + url + '\', \'' + names[index] + '\', \'' + id + '\', ' + numbers[index] + '); return false;" /></p>'
       + '</div>';
   }
 
@@ -146,7 +145,6 @@ function sendInforRequest(url) {
       onInforError(url);
     }
 
-    document.getElementById('convertor').style.display = 'block';
   };
 
   xhr.open('POST', 'infor.php', true);
@@ -173,7 +171,6 @@ function onConvertionSucceed(url, content) {
 
   var content = '<h3>' + url + ' is converted.</h3>';
   document.getElementById('notification').innerHTML = content;
-  document.getElementById('convertor').style.display = 'block';
   document.getElementById('selection').style.display = 'none';
 }
 
@@ -181,7 +178,6 @@ function onConvertionError(url, log='') {
   var content = '<h3>Convertion is failed for ' + url + '.</h3><pre>' + log + '</pre>';
 
   document.getElementById('notification').innerHTML = content;
-  document.getElementById('convertor').style.display = 'block';
   document.getElementById('selection').style.display = 'block';
 }
 
@@ -207,7 +203,6 @@ function sendRequest(url, type, names, values) {
 
   document.getElementById('notification').innerHTML = '<h3>Converting ' + url + ' ...</h3>';
   document.getElementById('selection').style.display = 'none';
-  document.getElementById('convertor').style.display = 'none';
 
   var payload = 'url=' + encodeURIComponent(url) + '&type=' + encodeURIComponent(type);
 

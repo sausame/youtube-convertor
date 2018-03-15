@@ -25,15 +25,19 @@ if (! empty($url)) {
   </div>
   <div id="information"></div>
   <div id="selection"></div>
-  <div id="convertor" style="display: <?php echo(empty($url) ? 'block':'none'); ?>;">
-    <hr/>
+<?php
+if (empty($url)) {
+?>
+  <div id="convertor" style="display: block">
     <h2>Convertor</h2>
 	<form name="convertorform" method="post" action="" >
       <p><input type="text" name="url" placeholder="https://www.youtube.com/watch?v=" required /></p>
       <p><input type="submit" value="convert" /></p>
     </form>
   </div>
-  <hr/>
+<?php
+}
+?>
 
 <?php
 if (! empty($url)) {
