@@ -34,6 +34,7 @@ if (empty($url)) {
       <p><input type="text" name="url" placeholder="https://www.youtube.com/watch?v=" required /></p>
       <p><input type="submit" value="convert" /></p>
     </form>
+    <h2><a href="media.html">View converted media clips</a></h2>
   </div>
 <?php
 }
