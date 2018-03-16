@@ -16,7 +16,7 @@
 		}
 
 		echo(" {\n");
-		echo("\t\t\t\"format_id\": \"".$format["format_id"]."\",\n");
+		echo("\t\t\t\"format_id\": \"".$data["format_id"]."\",\n");
 		echo("\t\t\t\"format\": \"".$format["format"]."\",\n");
 		echo("\t\t\t\"codec\": \"".$format["codec"]."\",\n");
 		echo("\t\t\t\"ext\": \"".$format["ext"]."\",\n");
@@ -34,9 +34,9 @@
 
 			$formatId = (int)$data['format_id'];
 
-			foreach ($formats['formats'] as $format) {
+			foreach ($formats as $key => $format) {
 
-				if ($formatId == $format['format_id']) {
+				if ($formatId == (int)$key) {
 
 					if ($type == $format['type']) {
 

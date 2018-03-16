@@ -1,403 +1,344 @@
 {
-    "formats": [
-        {
-            "codec": "VP8", 
-            "ext": "webm", 
-            "format": "854x480", 
-            "format_id": 218, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP8", 
-            "ext": "webm", 
-            "format": "854x480", 
-            "format_id": 219, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "426x240", 
-            "format_id": 133, 
-            "type": "video"
-        }, 
-        {
-            "codec": "6-channel", 
-            "ext": "m4a", 
-            "format": "320k", 
-            "format_id": 258, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "1920x1080", 
-            "format_id": 137, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "1280x720", 
-            "format_id": 136, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "854x480", 
-            "format_id": 135, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "640x360", 
-            "format_id": 134, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4a", 
-            "format": "48k", 
-            "format_id": 139, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "4096x3072", 
-            "format_id": 138, 
-            "type": "video"
-        }, 
-        {
-            "codec": "6-channel", 
-            "ext": "m4a", 
-            "format": "192k", 
-            "format_id": 256, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "ogg", 
-            "format": "192k", 
-            "format_id": 172, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "ogg", 
-            "format": "128k", 
-            "format_id": 171, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "1920x1080", 
-            "format_id": 170, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "mp4", 
-            "format": "1280x720", 
-            "format_id": 22, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "256x144", 
-            "format_id": 278, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "854x480", 
-            "format_id": 168, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "1280x720", 
-            "format_id": 169, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "2560x1440", 
-            "format_id": 264, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "640x480", 
-            "format_id": 167, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4v", 
-            "format": "256x144", 
-            "format_id": 160, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "3gp", 
-            "format": "176x144", 
-            "format_id": 17, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "mp4", 
-            "format": "640x360", 
-            "format_id": 18, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "60fps", 
-            "ext": "m4v", 
-            "format": "1280x720", 
-            "format_id": 298, 
-            "type": "video"
-        }, 
-        {
-            "codec": "60fps", 
-            "ext": "m4v", 
-            "format": "1920x1080", 
-            "format_id": 299, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "1920x1280", 
-            "format_id": 271, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "3414x1080", 
-            "format_id": 272, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "mp4", 
-            "format": "640x360-3D", 
-            "format_id": 82, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "mp4", 
-            "format": "640x480-3D", 
-            "format_id": 83, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "Opus", 
-            "ext": "opus", 
-            "format": "56k", 
-            "format_id": 250, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "mp4", 
-            "format": "1280x720-3D", 
-            "format_id": 84, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "Opus", 
-            "ext": "opus", 
-            "format": "128k", 
-            "format_id": 251, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "1920x1080", 
-            "format_id": 46, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "854x480", 
-            "format_id": 44, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "1280x720", 
-            "format_id": 45, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "640x360", 
-            "format_id": 43, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "flv", 
-            "format": "320x240", 
-            "format_id": 5, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4a", 
-            "format": "128k", 
-            "format_id": 140, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "", 
-            "ext": "m4a", 
-            "format": "256k", 
-            "format_id": 141, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "1280x720", 
-            "format_id": 302, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "1920x1080", 
-            "format_id": 303, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9 med", 
-            "ext": "webm", 
-            "format": "640x480", 
-            "format_id": 245, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9 low", 
-            "ext": "webm", 
-            "format": "640x480", 
-            "format_id": 244, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "720x480", 
-            "format_id": 247, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9 high", 
-            "ext": "webm", 
-            "format": "640x480", 
-            "format_id": 246, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "480x360", 
-            "format_id": 243, 
-            "type": "video"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "360x240", 
-            "format_id": 242, 
-            "type": "video"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "1280x720-3D", 
-            "format_id": 102, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "webm", 
-            "format": "640x360-3D", 
-            "format_id": 100, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "Opus", 
-            "ext": "opus", 
-            "format": "48k", 
-            "format_id": 249, 
-            "type": "audio"
-        }, 
-        {
-            "codec": "VP9", 
-            "ext": "webm", 
-            "format": "1920x1080", 
-            "format_id": 248, 
-            "type": "video"
-        }, 
-        {
-            "codec": "4:3 hi-res", 
-            "ext": "mp4", 
-            "format": "4096x3072", 
-            "format_id": 38, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "mp4", 
-            "format": "1920x1080", 
-            "format_id": 37, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "3gp", 
-            "format": "320x240", 
-            "format_id": 36, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "flv", 
-            "format": "854x480", 
-            "format_id": 35, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "", 
-            "ext": "flv", 
-            "format": "640x360", 
-            "format_id": 34, 
-            "type": "normal"
-        }, 
-        {
-            "codec": "AVC", 
-            "ext": "m4v", 
-            "format": "3840x2160", 
-            "format_id": 266, 
-            "type": "video"
-        }
-    ]
+    "5": {
+        "codec": "", 
+        "ext": "flv", 
+        "format": "320x240", 
+        "type": "normal"
+    }, 
+    "17": {
+        "codec": "", 
+        "ext": "3gp", 
+        "format": "176x144", 
+        "type": "normal"
+    }, 
+    "18": {
+        "codec": "", 
+        "ext": "mp4", 
+        "format": "640x360", 
+        "type": "normal"
+    }, 
+    "22": {
+        "codec": "", 
+        "ext": "mp4", 
+        "format": "1280x720", 
+        "type": "normal"
+    }, 
+    "34": {
+        "codec": "", 
+        "ext": "flv", 
+        "format": "640x360", 
+        "type": "normal"
+    }, 
+    "35": {
+        "codec": "", 
+        "ext": "flv", 
+        "format": "854x480", 
+        "type": "normal"
+    }, 
+    "36": {
+        "codec": "", 
+        "ext": "3gp", 
+        "format": "320x240", 
+        "type": "normal"
+    }, 
+    "37": {
+        "codec": "", 
+        "ext": "mp4", 
+        "format": "1920x1080", 
+        "type": "normal"
+    }, 
+    "38": {
+        "codec": "4:3 hi-res", 
+        "ext": "mp4", 
+        "format": "4096x3072", 
+        "type": "normal"
+    }, 
+    "43": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "640x360", 
+        "type": "normal"
+    }, 
+    "44": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "854x480", 
+        "type": "normal"
+    }, 
+    "45": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "1280x720", 
+        "type": "normal"
+    }, 
+    "46": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "1920x1080", 
+        "type": "normal"
+    }, 
+    "82": {
+        "codec": "", 
+        "ext": "mp4", 
+        "format": "640x360-3D", 
+        "type": "normal"
+    }, 
+    "83": {
+        "codec": "", 
+        "ext": "mp4", 
+        "format": "640x480-3D", 
+        "type": "normal"
+    }, 
+    "84": {
+        "codec": "", 
+        "ext": "mp4", 
+        "format": "1280x720-3D", 
+        "type": "normal"
+    }, 
+    "100": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "640x360-3D", 
+        "type": "normal"
+    }, 
+    "102": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "1280x720-3D", 
+        "type": "normal"
+    }, 
+    "133": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "426x240", 
+        "type": "video"
+    }, 
+    "134": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "640x360", 
+        "type": "video"
+    }, 
+    "135": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "854x480", 
+        "type": "video"
+    }, 
+    "136": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "1280x720", 
+        "type": "video"
+    }, 
+    "137": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "1920x1080", 
+        "type": "video"
+    }, 
+    "138": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "4096x3072", 
+        "type": "video"
+    }, 
+    "139": {
+        "codec": "", 
+        "ext": "m4a", 
+        "format": "48k", 
+        "type": "audio"
+    }, 
+    "140": {
+        "codec": "", 
+        "ext": "m4a", 
+        "format": "128k", 
+        "type": "audio"
+    }, 
+    "141": {
+        "codec": "", 
+        "ext": "m4a", 
+        "format": "256k", 
+        "type": "audio"
+    }, 
+    "160": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "256x144", 
+        "type": "video"
+    }, 
+    "167": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "640x480", 
+        "type": "video"
+    }, 
+    "168": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "854x480", 
+        "type": "video"
+    }, 
+    "169": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "1280x720", 
+        "type": "video"
+    }, 
+    "170": {
+        "codec": "", 
+        "ext": "webm", 
+        "format": "1920x1080", 
+        "type": "video"
+    }, 
+    "171": {
+        "codec": "", 
+        "ext": "ogg", 
+        "format": "128k", 
+        "type": "audio"
+    }, 
+    "172": {
+        "codec": "", 
+        "ext": "ogg", 
+        "format": "192k", 
+        "type": "audio"
+    }, 
+    "218": {
+        "codec": "VP8", 
+        "ext": "webm", 
+        "format": "854x480", 
+        "type": "video"
+    }, 
+    "219": {
+        "codec": "VP8", 
+        "ext": "webm", 
+        "format": "854x480", 
+        "type": "video"
+    }, 
+    "242": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "360x240", 
+        "type": "video"
+    }, 
+    "243": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "480x360", 
+        "type": "video"
+    }, 
+    "244": {
+        "codec": "VP9 low", 
+        "ext": "webm", 
+        "format": "640x480", 
+        "type": "video"
+    }, 
+    "245": {
+        "codec": "VP9 med", 
+        "ext": "webm", 
+        "format": "640x480", 
+        "type": "video"
+    }, 
+    "246": {
+        "codec": "VP9 high", 
+        "ext": "webm", 
+        "format": "640x480", 
+        "type": "video"
+    }, 
+    "247": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "720x480", 
+        "type": "video"
+    }, 
+    "248": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "1920x1080", 
+        "type": "video"
+    }, 
+    "249": {
+        "codec": "Opus", 
+        "ext": "opus", 
+        "format": "48k", 
+        "type": "audio"
+    }, 
+    "250": {
+        "codec": "Opus", 
+        "ext": "opus", 
+        "format": "56k", 
+        "type": "audio"
+    }, 
+    "251": {
+        "codec": "Opus", 
+        "ext": "opus", 
+        "format": "128k", 
+        "type": "audio"
+    }, 
+    "256": {
+        "codec": "6-channel", 
+        "ext": "m4a", 
+        "format": "192k", 
+        "type": "audio"
+    }, 
+    "258": {
+        "codec": "6-channel", 
+        "ext": "m4a", 
+        "format": "320k", 
+        "type": "audio"
+    }, 
+    "264": {
+        "codec": "", 
+        "ext": "m4v", 
+        "format": "2560x1440", 
+        "type": "video"
+    }, 
+    "266": {
+        "codec": "AVC", 
+        "ext": "m4v", 
+        "format": "3840x2160", 
+        "type": "video"
+    }, 
+    "271": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "1920x1280", 
+        "type": "video"
+    }, 
+    "272": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "3414x1080", 
+        "type": "video"
+    }, 
+    "278": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "256x144", 
+        "type": "video"
+    }, 
+    "298": {
+        "codec": "60fps", 
+        "ext": "m4v", 
+        "format": "1280x720", 
+        "type": "video"
+    }, 
+    "299": {
+        "codec": "60fps", 
+        "ext": "m4v", 
+        "format": "1920x1080", 
+        "type": "video"
+    }, 
+    "302": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "1280x720", 
+        "type": "video"
+    }, 
+    "303": {
+        "codec": "VP9", 
+        "ext": "webm", 
+        "format": "1920x1080", 
+        "type": "video"
+    }
 }
