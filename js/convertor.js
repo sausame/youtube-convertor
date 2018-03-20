@@ -2,7 +2,7 @@
  * Information
  */
 
-function getAudioQualities() {
+function updateAudioQualities() {
 
   var content = '<div>'
      + '<table class="tb">'
@@ -21,19 +21,19 @@ function getAudioQualities() {
     var id = 'audio-quality-' + i;
 
     content += '<tr>';
-    content += '<th><input id="' + id + '" type="radio" name="quality" value="' + qualities[i] + '"/></th>';
+    content += '<th><input id="' + id + '" type="radio" name="audio-quality" value="' + qualities[i] + '"/></th>';
     content += '<td><label for="' + id + '">' + qualities[i]+'kb</label></td>\n';
     content += '</tr>';
   }
 
   content += '</tbody></table></div>';
 
-  return content;
+  document.getElementById('audio-quality').innerHTML = content;
 }
 
-function getFormat(id, name, index, format) {
+function getFormat(name, index, format) {
 
-  id += '-' + name + '-' + index;
+  var id = name + '-' + index;
 
   var fields = [ 'format', 'codec', 'ext', 'filesize' ];
 
@@ -50,7 +50,7 @@ function getFormat(id, name, index, format) {
   return content;
 }
 
-function getGroup(id, name, group) {
+function updateGroup(name, group) {
 
   var content = '<table class="tb">'
      + '<thead>'
@@ -65,12 +65,12 @@ function getGroup(id, name, group) {
      + '<tbody>';
 
   for (var index = 0; index < group.length; index ++) {
-      content += getFormat(id, name, index, group[index]);
+      content += getFormat(name, index, group[index]);
   }
 
   content += '</tbody></table>';
 
-  return content;
+  document.getElementById(name).innerHTML = content;
 }
 
 function onInforSucceed(content) {
@@ -79,44 +79,25 @@ function onInforSucceed(content) {
 
   var infor = JSON.parse(content);
 
-  var url = infor['webpage_url'];
+  currentUrl = infor['webpage_url'];
 
   // Information
-  var content = '<h3><a id="link" href="' + url + '">' + infor['fulltitle'] + '</a></h3>'
+  var content = '<h3><a id="link" href="' + currentUrl + '">' + infor['fulltitle'] + '</a></h3>'
     + '<p><div id="thumbnail"><img src="' + infor['thumbnail'] + '" /></div></p>'
     + '<h3>Duration: ' + infor['duration'] + ' seconds</h3>'
     + '</div>';
 
   document.getElementById('information').innerHTML = content;
 
-  // Selection
-  content = '';
+  // Update groups
+  var types = ['normal', 'video', 'audio'];
 
-  var names = ['normal', 'video+audio', 'audio'];
-  var categories = [['normal'], ['video', 'audio'], ['audio']];
-  var audioqualities = [false, false, true];
-  var numbers = [1, 2, 2];
-
-  for (var index = 0; index < names.length; index ++) {
-
-    var id = 'id-' + index;
-    var types = categories[index];
-
-    content += '<div id="' + id + '">';
-
-    for (var i = 0; i < types.length; i ++) {
-      content += getGroup(id, types[i], infor[types[i]]);
-    }
-
-    if (audioqualities[index]) {
-      content += getAudioQualities();
-    }
-
-    content += '<p><input type="submit" value="Convert ' + names[index].toUpperCase() + '" onclick="convert(\'' + url + '\', \'' + names[index] + '\', \'' + id + '\', ' + numbers[index] + '); return false;" /></p>'
-      + '</div>';
+  for (var i = 0; i < types.length; i ++) {
+    updateGroup(types[i], infor[types[i]]);
   }
 
-  document.getElementById('selection').innerHTML = content;
+  updateAudioQualities();
+
   document.getElementById('selection').style.display = 'block';
 }
 
@@ -150,6 +131,43 @@ function sendInforRequest(url) {
   xhr.open('POST', 'infor.php', true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send('url=' + url);
+}
+
+function showTab(anEvent, type) {
+
+  var i, tabcontent, tablinks;
+
+   // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab
+  var map = {
+    'normal-tab': ['normal'],
+    'video-tab': ['video', 'audio', 'audio-quality'],
+    'audio-tab': ['audio', 'audio-quality']
+  };
+
+  var ids = map[anEvent.currentTarget.id];
+
+  for (i = 0; i < ids.length; i ++) {
+    document.getElementById(ids[i]).style.display = "block";
+  }
+
+  // Add an "active" class to the button that opened the tab
+  anEvent.currentTarget.className += " active";
+
+  var content = '<p><input type="submit" value="Convert ' + type.toUpperCase() + '" onclick="convert(currentUrl, \'' + type + '\'); return false;" /></p>';
+
+  document.getElementById('convertor-button').innerHTML = content;
 }
 
 /**
@@ -197,7 +215,7 @@ function onConvertionSucceed(url, content) {
     document.getElementById('link').href = mediaUrl;
   }
 
-  var content = '<h3>' + url + ' is converted.</h3>';
+  var content = '<h3>' + url + ' is converted.</h3><pre>' + data['log'] + '</pre>';
   document.getElementById('notification').innerHTML = content;
   document.getElementById('selection').style.display = 'none';
 }
@@ -209,7 +227,7 @@ function onConvertionError(url, log='') {
   document.getElementById('selection').style.display = 'block';
 }
 
-function sendRequest(url, type, names, values) {
+function sendRequest(url, type, param) {
 
   clearInterval(timer);
 
@@ -234,39 +252,48 @@ function sendRequest(url, type, names, values) {
 
   var payload = 'url=' + encodeURIComponent(url) + '&type=' + encodeURIComponent(type);
 
-  for (var i = 0; i < names.length; i ++) {
-    payload += '&' + names[i] + '=' + values[i];
+  for (var key in param) {
+    payload += '&' + key + '=' + param[key];
   }
+
+  console.log(param);
 
   xhr.open('POST', 'convertor.php', true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send(payload);
 }
 
-function convert(url, type, id, number) {
+function convert(url, type) {
 
-  var element = document.getElementById(id);
-  var radios = element.getElementsByTagName('input');
+  var map = {
+    'normal': ['normal'],
+    'video+audio': ['video', 'audio', 'audio-quality'],
+    'audio': ['audio', 'audio-quality']
+  };
 
-  var names = [];
-  var values = [];
   var count = 0;
+  var param = {};
+  var ids = map[type];
 
-  for (var i = 0; i < radios.length; i++) {
+  for (i = 0; i < ids.length; i ++) {
 
-    var radio = radios[i];
+    var element = document.getElementById(ids[i]);
+    var radios = element.getElementsByTagName('input');
 
-    if (radio.type === 'radio' && radio.checked) {
+    for (var j = 0; j < radios.length; j ++) {
 
-      names.push(radio.name);
-      values.push(radio.value);
+      var radio = radios[j];
 
-      count ++;
+      if (radio.type === 'radio' && radio.checked) {
+
+        param[ids[i]] = radio.value;
+        count ++;
+      }
     }
   }
 
-  if (count == number) {
-    timer = setInterval(function () { sendRequest(url, type, names, values); }, 1000);
+  if (count == ids.length) {
+    timer = setInterval(function () { sendRequest(url, type, param); }, 1000);
   } else {
     console.log('No input');
   }

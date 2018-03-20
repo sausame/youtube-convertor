@@ -24,4 +24,12 @@ function getLastModifiedFile($folder) {
 	return $files[0];
 }
 
+function getLastModifiedPath($folder) {
+	$filename = getLastModifiedFile($folder);
+	if (NULL == $filename) {
+		return NULL;
+	}
+	return $folder.'/'.$filename;
+}
+
 ?>

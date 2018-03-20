@@ -7,6 +7,10 @@ if (! empty($_POST)) {
 } elseif (! empty($_GET)) {
 	$url = $_GET['url'];
 }
+
+if (! empty($url)) {
+	$url = stripslashes($url);
+}
 ?>
 <html>
 <head>
@@ -24,7 +28,18 @@ if (! empty($url)) {
 ?>
   </div>
   <div id="information"></div>
-  <div id="selection"></div>
+  <div id="selection" style="display: none">
+    <div id="tab-div" class="tab">
+      <button id='normal-tab' class="tablinks" onclick="showTab(event, 'normal')">Normal</button>
+      <button id='video-tab' class="tablinks" onclick="showTab(event, 'video+audio')">Video</button>
+      <button id='audio-tab' class="tablinks" onclick="showTab(event, 'audio')">Audio</button>
+   </div>
+   <div id="normal" class="tabcontent"></div>
+   <div id="video" class="tabcontent"></div>
+   <div id="audio" class="tabcontent"></div>
+   <div id="audio-quality" class="tabcontent"></div>
+   <div id="convertor-button"></div>
+  </div>
 <?php
 if (empty($url)) {
 ?>
@@ -47,9 +62,10 @@ if (! empty($url)) {
   <script>
 
     function getData() {
-      sendInforRequest(<?php echo("'$url'"); ?>);
+      sendInforRequest(currentUrl);
     }
 
+    var currentUrl = <?php echo("'$url'"); ?>;
     var timer = setInterval(getData, 1000);
   </script>
 <?php

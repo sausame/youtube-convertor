@@ -9,12 +9,12 @@ class Rpc
 		return '{"jsonrpc" : "2.0", "error" : {"code": ' . $code . ', "message": "' . $message . '"}, "data": ' . $data . '}';
 	}
 
-	public static function onSucceed($data=NULL) {
-		return self::onResult($data, self::NO_ERROR, null);
+	public static function onSucceed($data=NULL, $message=NULL) {
+		return self::onResult($data, self::NO_ERROR, $message);
 	}
 
-	public static function onError($data=NULL) {
-		return self::onResult($data, self::UNKNOWN_ERROR, null);
+	public static function onError($data=NULL, $message=NULL) {
+		return self::onResult($data, self::UNKNOWN_ERROR, $message);
 	}
 }
 
