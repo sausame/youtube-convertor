@@ -32,4 +32,20 @@ function getLastModifiedPath($folder) {
 	return $folder.'/'.$filename;
 }
 
+function renamePath($oldname, $newname) {
+
+	syslog(LOG_WARNING, "$oldname --> $newname");
+	rename($oldname, $newname);
+}
+
+function unlinkPath($filename, $iskept=false) {
+
+	if ($iskept) {
+		renamePath($filename, $filename.'.old');
+	} else {
+		syslog(LOG_WARNING, "Unlink $filename");
+		unlink($filename);
+	}
+}
+
 ?>

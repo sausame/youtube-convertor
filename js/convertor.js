@@ -328,7 +328,7 @@ function sendRequest(url, type, param) {
 
   console.log(param);
 
-  xhr.open('POST', 'convertor.php', true);
+  xhr.open('POST', 'convert.php', true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send(payload);
 }
