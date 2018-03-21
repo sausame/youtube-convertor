@@ -31,19 +31,44 @@ function updateAudioQualities() {
   document.getElementById('audio-quality').innerHTML = content;
 }
 
+function humanFileSize(bytes, si=true) {
+
+  var thresh = si ? 1000 : 1024;
+
+  if (Math.abs(bytes) < thresh) {
+      return bytes + ' B';
+  }
+
+  var units = si
+      ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+      : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+
+  var u = -1;
+
+  do {
+      bytes /= thresh;
+      ++ u;
+  } while (Math.abs(bytes) >= thresh && u < units.length - 1);
+
+  return bytes.toFixed(1) + ' ' + units[u];
+}
+
 function getFormat(name, index, format) {
 
   var id = name + '-' + index;
 
-  var fields = [ 'format', 'codec', 'ext', 'filesize' ];
+  var fields = [ 'format', 'codec', 'ext' ];
 
   var content = '<tr>';
 
   content += '<th><input id="' + id + '" type="radio" name="' + name + '" value="' + format['format_id'] + '"/></th>';
 
   for (var i = 0; i < fields.length; i ++) {
-      content += '<td><label for="' + id + '">' + format[fields[i]]+'</label></td>\n';
+      content += '<td><label for="' + id + '">' + format[fields[i]] +'</label></td>\n';
   }
+
+  var filesize = humanFileSize(format['filesize']);
+  content += '<td><label for="' + id + '">' + filesize +'</label></td>\n';
 
   content += '</tr>';
 
