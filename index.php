@@ -30,9 +30,9 @@ if (! empty($url)) {
   <div id="information"></div>
   <div id="selection" style="display: none">
     <div id="tab-div" class="tab">
-      <button id='normal-tab' class="tablinks" onclick="showTab(event, 'normal')">Normal</button>
-      <button id='video-tab' class="tablinks" onclick="showTab(event, 'video+audio')">Video</button>
-      <button id='audio-tab' class="tablinks" onclick="showTab(event, 'audio')">Audio</button>
+      <button id='normal-tab' class="tablinks" onclick="onClickTab(event)">Normal</button>
+      <button id='video-tab' class="tablinks" onclick="onClickTab(event)">Video</button>
+      <button id='audio-tab' class="tablinks" onclick="onClickTab(event)">Audio</button>
    </div>
    <div id="normal" class="tabcontent"></div>
    <div id="video" class="tabcontent"></div>

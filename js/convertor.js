@@ -99,6 +99,8 @@ function onInforSucceed(content) {
   updateAudioQualities();
 
   document.getElementById('selection').style.display = 'block';
+
+  showTab('normal-tab');
 }
 
 function onInforError(url) {
@@ -133,7 +135,7 @@ function sendInforRequest(url) {
   xhr.send('url=' + url);
 }
 
-function showTab(anEvent, type) {
+function showTab(tabId) {
 
   var i, tabcontent, tablinks;
 
@@ -156,18 +158,31 @@ function showTab(anEvent, type) {
     'audio-tab': ['audio', 'audio-quality']
   };
 
-  var ids = map[anEvent.currentTarget.id];
+  var ids = map[tabId];
 
   for (i = 0; i < ids.length; i ++) {
     document.getElementById(ids[i]).style.display = "block";
   }
 
   // Add an "active" class to the button that opened the tab
-  anEvent.currentTarget.className += " active";
+  document.getElementById(tabId).className += " active";
+
+  // Show the current tab
+  var types = {
+    'normal-tab': 'normal',
+    'video-tab': 'video+audio',
+    'audio-tab': 'audio'
+  };
+
+  var type = types[tabId];
 
   var content = '<p><input type="submit" value="Convert ' + type.toUpperCase() + '" onclick="convert(currentUrl, \'' + type + '\'); return false;" /></p>';
 
   document.getElementById('convertor-button').innerHTML = content;
+}
+
+function onClickTab(anEvent) {
+  showTab(anEvent.currentTarget.id);
 }
 
 /**
