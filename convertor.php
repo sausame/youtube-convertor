@@ -53,6 +53,26 @@ function unlinkPath($filename, $iskept=false) {
 	}
 }
 
+function getVideoFrameRate($path, $filename) {
+
+	$cmd = "cd $path && ffprobe -show_streams '$filename'";
+	runCommand($cmd, $retval);
+
+	$output = implode("\n", $retval);
+
+	$config = parse_ini_string($output);
+	$framerate = $config['r_frame_rate'];
+
+	$pos = strpos($framerate, '/');
+	$framerate = substr($framerate, 0, $pos);
+
+	if (empty($framerate)) {
+		return 0;
+	}
+
+	return (int)$framerate;
+}
+
 function translateToM4v($path, $videoFilename, &$retval, $framerate=null) {
 
 	$pos = strrpos($videoFilename, '.');
@@ -62,7 +82,11 @@ function translateToM4v($path, $videoFilename, &$retval, $framerate=null) {
 	$filename = "$prefix.m4v";
 
 	if (! empty($framerate)) {
-		$framerate = "-r $framerate";
+		if ((int)$framerate < getVideoFrameRate($path, $videoFilename)) {
+			$framerate = "-r $framerate";
+		} else {
+			$framerate = null;
+	   	}
 	}
 
 	$cmd = "cd $path && ffmpeg -y -i '$videoFilename' $framerate -vcodec h264 '$filename'";
