@@ -3,7 +3,7 @@
 require('files.php');
 require('rpc.php');
 
-function getParamOrExit($name) {
+function getParam($name) {
 
 	$value = '';
 
@@ -12,6 +12,13 @@ function getParamOrExit($name) {
 	} elseif (! empty($_GET)) {
 		$value = $_GET[$name];
 	}
+
+	return $value;
+}
+
+function getParamOrExit($name) {
+
+	$value = getParam($name);
 
 	if (! empty($value)) {
 		return $value;
@@ -46,7 +53,7 @@ function unlinkPath($filename, $iskept=false) {
 	}
 }
 
-function translateToM4v($path, $videoFilename, &$retval) {
+function translateToM4v($path, $videoFilename, &$retval, $framerate=null) {
 
 	$pos = strrpos($videoFilename, '.');
 
@@ -54,7 +61,11 @@ function translateToM4v($path, $videoFilename, &$retval) {
 	$prefix = substr($videoFilename, 0, $pos);
 	$filename = "$prefix.m4v";
 
-	$cmd = "cd $path && ffmpeg -y -i '$videoFilename' -vcodec h264 '$filename'";
+	if (! empty($framerate)) {
+		$framerate = "-r $framerate";
+	}
+
+	$cmd = "cd $path && ffmpeg -y -i '$videoFilename' $framerate -vcodec h264 '$filename'";
 	runCommand($cmd, $retval);
 
 	unlinkPath("$path/$videoFilename");
@@ -62,7 +73,7 @@ function translateToM4v($path, $videoFilename, &$retval) {
 	return $filename;
 }
 
-function translateToM4a($path, $audioFilename, $quality, &$retval) {
+function translateToM4a($path, $audioFilename, &$retval, $quality=null) {
 
 	$pos = strrpos($audioFilename, '.');
 
@@ -70,7 +81,11 @@ function translateToM4a($path, $audioFilename, $quality, &$retval) {
 	$prefix = substr($audioFilename, 0, $pos);
 	$filename = "$prefix.m4a";
 
-	$cmd = "cd $path && ffmpeg -y -i '$audioFilename' -vn -acodec aac -strict -2 '-b:a' ".$quality."k '-bsf:a' aac_adtstoasc '$filename'";
+	if (! empty($quality)) {
+		$quality = "'-b:a' " . $quality . "k";
+	}
+
+	$cmd = "cd $path && ffmpeg -y -i '$audioFilename' -vn -acodec aac -strict -2 $quality '-bsf:a' aac_adtstoasc '$filename'";
 	runCommand($cmd, $retval);
 
 	unlinkPath("$path/$audioFilename");
@@ -224,7 +239,9 @@ if ('normal' == $type) {
 			// To m4v
 			if ('m4v' != $vidoeExt) {
 
-				$filename = translateToM4v($downloader->getPath(), $filename, $retval);
+				$framerate = getParam('video-framerate');
+				$filename = translateToM4v($downloader->getPath(), $filename, $retval, $framerate);
+
 				$retValue = array_merge($retValue, $retval);
 			}
 
@@ -245,8 +262,8 @@ if ('normal' == $type) {
 			// To m4a
 			if ('m4a' != $audioExt) {
 
-				$quality = getParamOrExit('audio-quality');
-				$filename = translateToM4a($downloader->getPath(), $filename, $quality, $retval);
+				$quality = getParam('audio-quality');
+				$filename = translateToM4a($downloader->getPath(), $filename, $retval, $quality);
 
 				$retValue = array_merge($retValue, $retval);
 			}
@@ -263,9 +280,13 @@ if ('normal' == $type) {
 } elseif ('audio' == $type) {
 
 	$format = getParamOrExit('audio');
-	$quality = getParamOrExit('audio-quality');
+	$quality = getParam('audio-quality');
 
-	$options = "-x --audio-format mp3 --audio-quality $quality";
+	if (! empty($quality)) {
+		$quality = "--audio-quality $quality";
+	}
+
+	$options = "-x --audio-format mp3 $quality";
 
 	$filename = $downloader->download($format, $options, $retValue);
 

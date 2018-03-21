@@ -2,6 +2,35 @@
  * Information
  */
 
+function updateVideoFramerates() {
+
+  var content = '<div>'
+     + '<table class="tb">'
+     + '<thead>'
+     + '<tr>'
+     + '<th width="20%">FRAMERATE</td>'
+     + '<th>BITRATES</td>'
+     + '</tr>'
+     + '</thead>';
+     + '<tbody>';
+
+  var qualities = [ 5, 10, 15, 24, 25, 30, 48, 60, 90, 120 ];
+
+  for (var i = 0; i < qualities.length; i ++) {
+
+    var id = 'video-framerate-' + i;
+
+    content += '<tr>';
+    content += '<th><input id="' + id + '" type="radio" name="video-framerate" value="' + qualities[i] + '"/></th>';
+    content += '<td><label for="' + id + '">' + qualities[i] + ' fps </label></td>\n';
+    content += '</tr>';
+  }
+
+  content += '</tbody></table></div>';
+
+  document.getElementById('video-framerate').innerHTML = content;
+}
+
 function updateAudioQualities() {
 
   var content = '<div>'
@@ -22,7 +51,7 @@ function updateAudioQualities() {
 
     content += '<tr>';
     content += '<th><input id="' + id + '" type="radio" name="audio-quality" value="' + qualities[i] + '"/></th>';
-    content += '<td><label for="' + id + '">' + qualities[i]+'kb</label></td>\n';
+    content += '<td><label for="' + id + '">' + qualities[i] + ' kb</label></td>\n';
     content += '</tr>';
   }
 
@@ -121,6 +150,7 @@ function onInforSucceed(content) {
     updateGroup(types[i], infor[types[i]]);
   }
 
+  updateVideoFramerates();
   updateAudioQualities();
 
   document.getElementById('selection').style.display = 'block';
@@ -179,7 +209,7 @@ function showTab(tabId) {
   // Show the current tab
   var map = {
     'normal-tab': ['normal'],
-    'video-tab': ['video', 'audio', 'audio-quality'],
+    'video-tab': ['video', 'video-framerate', 'audio', 'audio-quality'],
     'audio-tab': ['audio', 'audio-quality']
   };
 
@@ -307,7 +337,7 @@ function convert(url, type) {
 
   var map = {
     'normal': ['normal'],
-    'video+audio': ['video', 'audio', 'audio-quality'],
+    'video+audio': ['video', 'video-framerate', 'audio', 'audio-quality'],
     'audio': ['audio', 'audio-quality']
   };
 
