@@ -45,8 +45,9 @@ function onSucceed(content) {
      + '<table class="tb">'
      + '<thead>'
      + '<tr>'
-     + '<th width="10%"></td>'
-     + '<th>Filenames</td>'
+     + '<th width="10%"></th>'
+     + '<th>Filenames</th>'
+     + '<th>Download</th>'
      + '</tr>'
      + '</thead>';
      + '<tbody>';
@@ -60,12 +61,14 @@ function onSucceed(content) {
     var type = getType(mediatype);
 
     var file = [name, type, mediatype];
+    var url = 'files/' + name;
 
     files.push(file);
 
     content += '<tr>';
     content += '<th>' + (i+1) + '</th>';
     content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + name + '</a></td>';
+    content += '<td><a href="' + url + '" download>Download</a></td>';
     content += '</tr>';
   }
 
