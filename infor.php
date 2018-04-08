@@ -63,10 +63,13 @@
 		$obj = json_decode($content, true);
 
 		echo("{\n");
+		echo("\t\"id\": \"".$obj["id"]."\",\n");
 		echo("\t\"webpage_url\": \"".$obj["webpage_url"]."\",\n");
 		echo("\t\"fulltitle\": \"".$obj["fulltitle"]."\",\n");
 		echo("\t\"thumbnail\": \"".$obj["thumbnail"]."\",\n");
 		echo("\t\"duration\": ".$obj["duration"].",\n");
+		echo("\t\"abr\": ".$obj["abr"].",\n");
+		echo("\t\"fps\": ".$obj["fps"].",\n");
 		dumpGroup($obj, $formats, 'audio');
 		echo(",\n");
 		dumpGroup($obj, $formats, 'video');

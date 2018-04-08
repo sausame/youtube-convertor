@@ -2,7 +2,7 @@
  * Information
  */
 
-function updateVideoFramerates() {
+function updateVideoFramerates(maxFps) {
 
   var content = '<div>'
      + '<table class="tb">'
@@ -16,7 +16,7 @@ function updateVideoFramerates() {
 
   var qualities = [ 5, 10, 15, 24, 25, 30, 48, 60, 90, 120 ];
 
-  for (var i = 0; i < qualities.length; i ++) {
+  for (var i = 0; i < qualities.length && qualities[i] <= maxFps; i ++) {
 
     var id = 'video-framerate-' + i;
 
@@ -31,7 +31,7 @@ function updateVideoFramerates() {
   document.getElementById('video-framerate').innerHTML = content;
 }
 
-function updateAudioQualities() {
+function updateAudioQualities(maxAbr) {
 
   var content = '<div>'
      + '<table class="tb">'
@@ -43,9 +43,9 @@ function updateAudioQualities() {
      + '</thead>';
      + '<tbody>';
 
-  var qualities = [ 48, 56, 64, 128, 256, 320 ];
+  var qualities = [ 48, 56, 64, 128, 160, 256, 320 ];
 
-  for (var i = 0; i < qualities.length; i ++) {
+  for (var i = 0; i < qualities.length && qualities[i] <= maxAbr; i ++) {
 
     var id = 'audio-quality-' + i;
 
@@ -127,18 +127,18 @@ function updateGroup(name, group) {
   document.getElementById(name).innerHTML = content;
 }
 
-function onInforSucceed(content) {
+function onInforSucceed(infor, content) {
 
   document.getElementById('notification').innerHTML = '';
 
-  var infor = JSON.parse(content);
+  var obj = JSON.parse(content);
 
-  currentUrl = infor['webpage_url'];
+  infor.setObj(obj);
 
   // Information
-  var content = '<h3><a id="link" href="' + currentUrl + '">' + infor['fulltitle'] + '</a></h3>'
-    + '<p><div id="thumbnail"><img src="' + infor['thumbnail'] + '" /></div></p>'
-    + '<h3>Duration: ' + infor['duration'] + ' seconds</h3>'
+  var content = '<h3><a id="link" href="' + obj['webpage_url'] + '">' + obj['fulltitle'] + '</a></h3>'
+    + '<p><div id="thumbnail"><img src="' + obj['thumbnail'] + '" /></div></p>'
+    + '<h3>Duration: ' + obj['duration'] + ' seconds</h3>'
     + '</div>';
 
   document.getElementById('information').innerHTML = content;
@@ -147,11 +147,11 @@ function onInforSucceed(content) {
   var types = ['normal', 'video', 'audio'];
 
   for (var i = 0; i < types.length; i ++) {
-    updateGroup(types[i], infor[types[i]]);
+    updateGroup(types[i], obj[types[i]]);
   }
 
-  updateVideoFramerates();
-  updateAudioQualities();
+  updateVideoFramerates(infor.getValue('fps'));
+  updateAudioQualities(infor.getValue('abr'));
 
   document.getElementById('selection').style.display = 'block';
 
@@ -165,7 +165,9 @@ function onInforError(url) {
   document.getElementById('notification').innerHTML = content;
 }
 
-function sendInforRequest(url) {
+function sendInforRequest(infor) {
+
+  url = infor.getUrl();
 
   clearInterval(timer);
 
@@ -178,7 +180,7 @@ function sendInforRequest(url) {
     var content = '';
 
     if (200 === xhr.status) {
-      onInforSucceed(xhr.responseText);
+      onInforSucceed(infor, xhr.responseText);
     } else {
       onInforError(url);
     }
@@ -231,7 +233,7 @@ function showTab(tabId) {
 
   var type = types[tabId];
 
-  var content = '<p><input type="submit" value="Convert ' + type.toUpperCase() + '" onclick="convert(currentUrl, \'' + type + '\'); return false;" /></p>';
+  var content = '<p><input type="submit" value="Convert ' + type.toUpperCase() + '" onclick="convert(information, \'' + type + '\'); return false;" /></p>';
 
   document.getElementById('convertor-button').innerHTML = content;
 }
@@ -297,7 +299,9 @@ function onConvertionError(url, log='') {
   document.getElementById('selection').style.display = 'block';
 }
 
-function sendRequest(url, type, param) {
+function sendRequest(infor) {
+
+  url = infor.getUrl();
 
   clearInterval(timer);
 
@@ -320,20 +324,14 @@ function sendRequest(url, type, param) {
   document.getElementById('notification').innerHTML = '<h3>Converting ' + url + ' ...</h3>';
   document.getElementById('selection').style.display = 'none';
 
-  var payload = 'url=' + encodeURIComponent(url) + '&type=' + encodeURIComponent(type);
-
-  for (var key in param) {
-    payload += '&' + key + '=' + param[key];
-  }
-
-  console.log(param);
+  var payload = infor.toRequestParams();
 
   xhr.open('POST', 'convert.php', true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send(payload);
 }
 
-function convert(url, type) {
+function convert(infor, type) {
 
   var map = {
     'normal': ['normal'],
@@ -342,7 +340,6 @@ function convert(url, type) {
   };
 
   var count = 0;
-  var param = {};
   var ids = map[type];
 
   for (i = 0; i < ids.length; i ++) {
@@ -356,16 +353,63 @@ function convert(url, type) {
 
       if (radio.type === 'radio' && radio.checked) {
 
-        param[ids[i]] = radio.value;
+        infor.setValue(ids[i], radio.value);
         count ++;
       }
     }
   }
 
+  infor.setValue('type', type);
+
   if (count == ids.length) {
-    timer = setInterval(function () { sendRequest(url, type, param); }, 1000);
+    timer = setInterval(function () { sendRequest(infor); }, 1000);
   } else {
     console.log('No input');
   }
 }
+
+class Information {
+
+  constructor(url) {
+
+    this.url = url;
+    this.params = {};
+  }
+
+  setObj(obj) {
+
+    this.url = obj['webpage_url'];
+
+    this.setValue('fulltitle', obj['fulltitle']);
+    this.setValue('thumbnail', obj['thumbnail']);
+    this.setValue('duration', obj['duration']);
+    this.setValue('abr', obj['abr']); // Average Bitrate
+    this.setValue('fps', obj['fps']);
+  }
+
+  setValue(key, value) {
+    this.params[key] = value;
+  }
+
+  getValue(key) {
+    return this.params[key];
+  }
+
+  getUrl() {
+    return this.url;
+  }
+
+  toRequestParams() {
+
+    var payload = 'url=' + encodeURIComponent(this.url);
+
+    for (var key in this.params) {
+      payload += '&' + key + '=' + encodeURIComponent(this.params[key]);
+    }
+
+    console.log(this.params);
+
+    return payload;
+  }
+};
 

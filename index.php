@@ -63,10 +63,10 @@ if (! empty($url)) {
   <script>
 
     function getData() {
-      sendInforRequest(currentUrl);
+      sendInforRequest(information);
     }
 
-    var currentUrl = <?php echo("'$url'"); ?>;
+    var information = new Information(<?php echo("'$url'"); ?>);
     var timer = setInterval(getData, 1000);
   </script>
 <?php
