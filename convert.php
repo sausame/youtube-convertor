@@ -5,7 +5,12 @@ require('downloader.php');
 
 openlog("Convertor", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 
-$downloader = new Downloader('config.ini', getParamOrExit('url'));
+$id = getParamOrExit('id');
+$url = getParamOrExit('url');
+$fulltitle = getParamOrExit('fulltitle');
+
+$downloader = new Downloader('config.ini', $id, $url, $fulltitle);
+$downloader->saveInformation();
 
 $type = getParamOrExit('type');
 

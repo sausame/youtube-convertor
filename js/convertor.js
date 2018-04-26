@@ -271,7 +271,7 @@ function onConvertionSucceed(url, content) {
     return;
   }
 
-  var mediaUrl = 'files/' + data['url'];
+  var mediaUrl = 'files/' + data['id'] + '/' + data['filename'];
   var mediatype = getExtension(mediaUrl);
 
   if (null != mediatype) {
@@ -380,6 +380,7 @@ class Information {
 
     this.url = obj['webpage_url'];
 
+    this.setValue('id', obj['id']);
     this.setValue('fulltitle', obj['fulltitle']);
     this.setValue('thumbnail', obj['thumbnail']);
     this.setValue('duration', obj['duration']);
