@@ -2,13 +2,27 @@
  * Media files
  */
 
-function getMediaType(filename) {
+function getExt(filename) {
+  var pos = filename.lastIndexOf('.');
+
+  if (pos < 0) {
+    return null;
+  }
+
+  return filename.substring(pos + 1);
+}
+
+function getMediaType(ext) {
+
+  if (null == ext) {
+    return null;
+  }
 
   var exts = ['mp4', 'webm', 'ogg', 'mp3', 'wav'];
   var mediatypes = ['mp4', 'webm', 'ogg', 'mpeg', 'wav'];
 
   for (var i = 0; i < exts.length; i ++) {
-    if (filename.endsWith(exts[i])) {
+    if (ext.endsWith(exts[i])) {
       return mediatypes[i];
     }
   }
@@ -52,23 +66,32 @@ function onSucceed(content) {
      + '</thead>';
      + '<tbody>';
 
-  var names = obj['files'];
+  var medias = obj['files'];
 
-  for (var i = 0; i < names.length; i ++) {
+  for (var i = 0; i < medias.length; i ++) {
 
-    var name = names[i];
-    var mediatype = getMediaType(name);
+    var media = medias[i];
+
+    var id = media['id'];
+    var originalUrl = media['url'];
+    var title = media['fulltitle'];
+    var filename = media['filename'];
+
+    var ext = getExt(filename)
+    var mediatype = getMediaType(ext);
     var type = getType(mediatype);
 
-    var file = [name, type, mediatype];
-    var url = 'files/' + name;
+    var url = 'files/' + id + '/' + filename;
+    var newFilename = title + '.' + ext;
+
+    var file = [url, type, mediatype];
 
     files.push(file);
 
     content += '<tr>';
     content += '<th>' + (i+1) + '</th>';
-    content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + name + '</a></td>';
-    content += '<td><a href="' + url + '" download>Download</a></td>';
+    content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + title + '</a></td>';
+    content += '<td><a href="' + url + '" download="' + newFilename + '">Download</a></td>';
     content += '</tr>';
   }
 
@@ -108,17 +131,16 @@ function getData() {
 
 function playFile(index) {
 
-  console.log(index);
+  console.log('Play NO.' + index);
 
   var file = files[index];
 
-  var url = 'files/' + file[0];
+  var url = file[0];
   var type = file[1];
   var mediatype = file[2];
 
   var content = '<' + type + ' controls>'
-    + '<source src="' + url + '" type="' + type + '/' + mediatype + '">'
-    + 'Your browser does not support the ' + type + ' tag.'
+    + '<source src="' + url + '" type="' + type + '/' + mediatype + '">' + 'Your browser does not support the ' + type + ' tag.'
     + '</' + type + '>';
 
   document.getElementById('player').innerHTML = content;

@@ -1,11 +1,21 @@
 <?php
 
-function scanFolder($folder) {
+function scanFolder($folder, $isFile=true, $isDir=false) {
 
 	$files = array();
 	foreach (scandir($folder) as $file) {
 		if ('.' == $file[0]) continue;
-		$files[$file] = filemtime($folder . '/' . $file);
+		$path = $folder . '/' . $file;
+
+		if ($isFile && !is_file($path)) {
+			continue;
+		}
+
+		if ($isDir && !is_dir($path)) {
+			continue;
+		}
+
+		$files[$file] = filemtime($path);
 	}
 
 	arsort($files);

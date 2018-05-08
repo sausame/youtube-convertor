@@ -10,7 +10,6 @@ $url = getParamOrExit('url');
 $fulltitle = getParamOrExit('fulltitle');
 
 $downloader = new Downloader('config.ini', $id, $url, $fulltitle);
-$downloader->saveInformation();
 
 $type = getParamOrExit('type');
 
@@ -129,6 +128,8 @@ if ('normal' == $type) {
 }
 
 $duration = time() - $now;
+
+$downloader->saveInformation($filename);
 
 echo($downloader->getResponse($succeeded, $filename, $type, $duration, $retValue));
 ?>

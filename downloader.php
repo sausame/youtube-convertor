@@ -74,13 +74,13 @@ class Downloader {
 		}
 	}
 
-	public function saveInformation() {
+	public function saveInformation($filename) {
 
 		if (! $fp = @fopen($this->savePath . "/information.json", 'wb')) {
 			return false;
 		}
 
-		$data = "{\"id\": \"" . $this->id . "\", \"url\": \"" . $this->url . "\", \"fulltitle\": \"". $this->fulltitle . "\"}";
+		$data = "{\"id\": \"" . $this->id . "\", \"url\": \"" . $this->url . "\", \"fulltitle\": \"". $this->fulltitle . "\", \"filename\": \"". $filename . "\"}";
 
 		fwrite($fp, $data);
 		@fclose($fp);
