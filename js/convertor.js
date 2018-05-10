@@ -43,7 +43,7 @@ function updateAudioQualities(maxAbr) {
      + '</thead>';
      + '<tbody>';
 
-  var qualities = [ 48, 56, 64, 128, 160, 256, 320 ];
+  var qualities = [ 48, 56, 64, 96, 128, 160, 256, 320 ];
 
   for (var i = 0; i < qualities.length && qualities[i] <= maxAbr; i ++) {
 
