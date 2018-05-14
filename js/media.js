@@ -91,7 +91,8 @@ function onSucceed(content) {
     content += '<tr>';
     content += '<th>' + (i+1) + '</th>';
     content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + title + '</a></td>';
-    content += '<td><a href="' + url + '" download="' + newFilename + '">Download</a></td>';
+    content += '<td><a href="' + url + '" class="btn" data-clipboard-text="' + newFilename + '" download="' + newFilename + '">Download</a></td>';
+
     content += '</tr>';
   }
 
