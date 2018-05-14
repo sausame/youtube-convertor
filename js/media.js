@@ -84,7 +84,7 @@ function onSucceed(content) {
     var url = 'files/' + id + '/' + filename;
     var newFilename = title + '.' + ext;
 
-    var file = [url, type, mediatype];
+    var file = [url, type, mediatype, title];
 
     files.push(file);
 
@@ -138,8 +138,10 @@ function playFile(index) {
   var url = file[0];
   var type = file[1];
   var mediatype = file[2];
+  var title = file[3];
 
-  var content = '<' + type + ' controls>'
+  var content = '<h2>' + title + '</h2>'
+    + '<' + type + ' controls>'
     + '<source src="' + url + '" type="' + type + '/' + mediatype + '">' + 'Your browser does not support the ' + type + ' tag.'
     + '</' + type + '>';
 
