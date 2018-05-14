@@ -131,7 +131,16 @@ function onInforSucceed(infor, content) {
 
   document.getElementById('notification').innerHTML = '';
 
-  var obj = JSON.parse(content);
+  var obj = null;
+
+  try {
+    obj = JSON.parse(content);
+  } catch (err) {
+    document.getElementById('notification').innerHTML = "<h3>Failed to retrieve information for '"
+      + infor.getUrl() + "', please try it again.</h3>";
+    console.log(content);
+    return
+  }
 
   infor.setObj(obj);
 
