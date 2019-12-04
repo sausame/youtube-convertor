@@ -62,6 +62,7 @@ function onSucceed(content) {
      + '<th width="10%"></th>'
      + '<th>Filenames</th>'
      + '<th>Download</th>'
+     + '<th>Delete</th>'
      + '</tr>'
      + '</thead>';
      + '<tbody>';
@@ -84,7 +85,7 @@ function onSucceed(content) {
     var url = 'files/' + id + '/' + filename;
     var newFilename = title + '.' + ext;
 
-    var file = [url, type, mediatype, title];
+    var file = [id, url, type, mediatype, title];
 
     files.push(file);
 
@@ -92,7 +93,7 @@ function onSucceed(content) {
     content += '<th>' + (i+1) + '</th>';
     content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + title + '</a></td>';
     content += '<td><a href="' + url + '" class="btn" data-clipboard-text="' + newFilename + '" download="' + newFilename + '">Download</a></td>';
-
+    content += '<td><a href="#" onclick="confirmToDeleteFile(' + i + '); return false;">Delete</a></td>';
     content += '</tr>';
   }
 
@@ -136,19 +137,98 @@ function playFile(index) {
 
   var file = files[index];
 
-  var url = file[0];
-  var type = file[1];
-  var mediatype = file[2];
-  var title = file[3];
+  var id = file[0];
+  var url = file[1];
+  var type = file[2];
+  var mediatype = file[3];
+  var title = file[4];
 
   var content = '<h2>' + title + '</h2>'
     + '<' + type + ' controls>'
     + '<source src="' + url + '" type="' + type + '/' + mediatype + '">' + 'Your browser does not support the ' + type + ' tag.'
     + '</' + type + '>';
 
-  document.getElementById('player').innerHTML = content;
+  document.getElementById('information').innerHTML = content;
 }
 
-var files = [];
-var timer = setInterval(getData, 1000);
+function confirmToDeleteFile(index) {
+
+  console.log('Confirm to delete NO.' + index);
+
+  var file = files[index];
+
+  var id = file[0];
+  var title = file[4];
+
+  var content = '<h3>Are you going to delete ' + title + '?</h3>'
+    + '<p><input type="submit" value="Confirm" onclick="deleteFile(' + index + '); return false;" /></p>';
+
+  document.getElementById('information').innerHTML = content;
+}
+
+function onDeleted(index, content) {
+
+  var obj = JSON.parse(content);
+
+  var num = obj['num'];
+
+  if (0 == num) {
+    onError(index);
+    return;
+  }
+
+  document.getElementById('information').innerHTML = '';
+
+  reset();
+}
+
+function onDeleteError(index) {
+
+  var file = files[index];
+
+  var id = file[0];
+  var url = file[1];
+  var type = file[2];
+  var mediatype = file[3];
+  var title = file[4];
+
+  var content = '<h2>Failed to delete ' + title + '.</h2>';
+
+  document.getElementById('information').innerHTML = content;
+}
+
+function deleteFile(index) {
+
+  console.log('Going to delete NO.' + index);
+
+  var xhr = new XMLHttpRequest();
+
+  xhr.onload = function() {
+
+    console.log(xhr.status);
+
+    if (200 === xhr.status) {
+      onDeleted(index, xhr.responseText);
+    } else {
+      onDeleteError(index);
+    }
+  };
+
+  var file = files[index];
+  var id = file[0];
+
+  xhr.open('POST', 'action.php', true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.send('action=delete&id=' + id);
+}
+
+function reset() {
+  files = [];
+  timer = setInterval(getData, 1000);
+}
+
+var files;
+var timer;
+
+reset();
 
