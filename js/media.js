@@ -173,7 +173,7 @@ function onDeleted(index, content) {
   var num = obj['num'];
 
   if (0 == num) {
-    onError(index);
+    onDeleteError(index);
     return;
   }
 
