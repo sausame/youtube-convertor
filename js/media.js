@@ -60,7 +60,7 @@ function onSucceed(content) {
      + '<thead>'
      + '<tr>'
      + '<th width="10%"></th>'
-     + '<th>Filenames</th>'
+     + '<th>Filename</th>'
      + '<th>Download</th>'
      + '<th>Delete</th>'
      + '</tr>'
