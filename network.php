@@ -23,5 +23,29 @@ function remotefileSize($url) {
 
 	return -1;
 }
+
+function saveRemoteFile($filename, $url) {
+
+	$ch = curl_init($url); 
+
+	curl_setopt($ch, CURLOPT_HEADER, 0); 
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
+
+	$data = curl_exec($ch); 
+
+	curl_close($ch); 
+
+	if (! $fp = @fopen($filename, 'wb')) {
+		return false;
+	}
+
+	fwrite($fp, $data);
+	@fclose($fp);
+
+	return true;
+}
+
 ?>
 

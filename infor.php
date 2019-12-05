@@ -56,7 +56,7 @@
 		echo("]");
 	}
 
-	function dump($content) {
+	function dump($content, $config) {
 
 		$formats = json_decode(file_get_contents('configs/formats.json'), true);
 
@@ -67,11 +67,23 @@
  			$abr = 320;
  		}
 
+		$imgUrl = $obj["thumbnail"];
+		if ($imgUrl) {
+			$pos = strrpos($imgUrl, '/');
+			if ($pos) {
+				$filename = substr($imgUrl, $pos + 1);
+				$savePath = $config['save-path'] . '/' . $filename;
+
+				saveRemoteFile($savePath, $imgUrl);
+				$imgUrl = 'files/' . $filename;
+			}
+		}
+
 		echo("{\n");
 		echo("\t\"id\": \"".$obj["id"]."\",\n");
 		echo("\t\"webpage_url\": \"".$obj["webpage_url"]."\",\n");
 		echo("\t\"fulltitle\": \"".$obj["fulltitle"]."\",\n");
-		echo("\t\"thumbnail\": \"".$obj["thumbnail"]."\",\n");
+		echo("\t\"thumbnail\": \"".$imgUrl."\",\n");
 		echo("\t\"duration\": ".$obj["duration"].",\n");
 		echo("\t\"abr\": ".$abr.",\n");
 		echo("\t\"fps\": ".$obj["fps"].",\n");
@@ -83,9 +95,8 @@
 		echo("\n}\n");
 	}
 
-	function getInfor($url) {
+	function getInfor($url, $config) {
 
-		$config = parse_ini_file('config.ini');
 		$envPath = $config['env-path'];
 
 		$cmd = "export PATH=$envPath".':$PATH && youtube-dl -j "' . $url . '"';
@@ -95,10 +106,13 @@
 	}
 
 	function dumpInfor($url) {
-		$content = getInfor($url);
+
+		$config = parse_ini_file('config.ini');
+
+		$content = getInfor($url, $config);
 
 		if ($content) {
-			dump($content);
+			dump($content, $config);
 		}
 	}
 ?>
