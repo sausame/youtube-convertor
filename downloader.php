@@ -33,7 +33,7 @@ class Downloader {
 
 	public function download($format, $options, &$retval) {
 
-		$cmd = "export LC_ALL=en_US.UTF-8 && export PATH=$this->envPath:\$PATH && youtube-dl -f $format $options -o '$this->savePath/%(id)s.%(ext)s' '$this->url'";
+		$cmd = "export LC_ALL=en_US.UTF-8 && export PATH=$this->envPath:\$PATH && youtube-dl -f $format $options -o '$this->savePath/%(id)s.%(ext)s' --exec 'touch {}' '$this->url'";
 		runCommand($cmd, $retval);
 
 		return getLastModifiedFile($this->savePath);
