@@ -61,8 +61,7 @@ function onSucceed(content) {
      + '<tr>'
      + '<th width="10%"></th>'
      + '<th>Filename</th>'
-     + '<th>Download</th>'
-     + '<th>Delete</th>'
+     + '<th>Action</th>'
      + '</tr>'
      + '</thead>';
      + '<tbody>';
@@ -92,8 +91,11 @@ function onSucceed(content) {
     content += '<tr>';
     content += '<th>' + (i+1) + '</th>';
     content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + title + '</a></td>';
-    content += '<td><a href="' + url + '" class="btn" data-clipboard-text="' + newFilename + '" download="' + newFilename + '">Download</a></td>';
-    content += '<td><a href="#" onclick="confirmToDeleteFile(' + i + '); return false;">Delete</a></td>';
+    content += '<td>';
+    content += '<p><a href="' + url + '" class="btn" data-clipboard-text="' + newFilename + '" download="' + newFilename + '">Download</a></p>';
+    content += '<p><a href="#" onclick="confirmToDeleteFile(' + i + '); return false;">Delete</a></p>';
+    content += '<p><a href="#" onclick="confirmToReloadFile(' + i + '); return false;">Reload</a></p>';
+    content += '</td>';
     content += '</tr>';
   }
 
@@ -220,6 +222,24 @@ function deleteFile(index) {
   xhr.open('POST', 'action.php', true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send('action=delete&id=' + id);
+}
+
+function confirmToReloadFile(index) {
+
+  console.log('Reload NO.' + index);
+
+  var file = files[index];
+
+  var id = file[0];
+  var title = file[4];
+
+  var content = '<h3>Are you going to reload ' + title + '?</h3>';
+  content += '<form name="convertorform" method="post" action="index.php" >';
+  content += '<p><input type="hidden" name="url" value="https://www.youtube.com/watch?v=' + id + '" /></p>';
+  content += '<p><input type="submit" value="Reload" /></p>';
+  content += '</form>';
+
+  document.getElementById('information').innerHTML = content;
 }
 
 function reset() {
