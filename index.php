@@ -10,6 +10,9 @@ if (! empty($_POST)) {
 
 if (! empty($url)) {
 	$url = stripslashes($url);
+	if (substr($url, 0, 5) !== "https") {
+		$url = "https://www.youtube.com/watch?v=".$url;
+	}
 }
 ?>
 <html>
