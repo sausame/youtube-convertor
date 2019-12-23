@@ -79,10 +79,16 @@
 			}
 		}
 
+		$fulltitle = $obj["fulltitle"];
+
+		if ($fulltitle) {
+			$fulltitle = str_replace("\"", "'", $fulltitle);
+		}
+
 		echo("{\n");
 		echo("\t\"id\": \"".$obj["id"]."\",\n");
 		echo("\t\"webpage_url\": \"".$obj["webpage_url"]."\",\n");
-		echo("\t\"fulltitle\": \"".$obj["fulltitle"]."\",\n");
+		echo("\t\"fulltitle\": \"".$fulltitle."\",\n");
 		echo("\t\"thumbnail\": \"".$imgUrl."\",\n");
 		echo("\t\"duration\": ".$obj["duration"].",\n");
 		echo("\t\"abr\": ".$abr.",\n");
