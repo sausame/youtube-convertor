@@ -5,6 +5,10 @@ Youtube-convertor is powerful, full-featured convertor for youtube videos, you c
 
 ## 1. Install youtube-dl:
 
+> sudo apt install python
+
+**Notice:** `python3` is NOT supported by `youtube-dl` so far.
+
 > https://github.com/rg3/youtube-dl#installation
 
 ## 2. Install php-curl
