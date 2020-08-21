@@ -51,3 +51,8 @@ Alternatively, if you are using php-fpm, you'll need to restart php5-fpm instead
 ## 7. Link to www
 
 > ln -s SOURCE_PATH /var/www/html/youtube-convertor
+
+## 8. Set timeout
+Because a converting process would take a long time, we need to set the timeout for php server.
+> https://rtcamp.com/tutorials/php/increase-script-execution-time/
+
