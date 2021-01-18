@@ -55,53 +55,73 @@ function onSucceed(content) {
     return;
   }
 
+  var element = document.getElementById('files');
+
+  var numOfRow = Math.round(element.offsetWidth / 400);
+  if (0 === numOfRow) {
+    numOfRow = 1;
+  }
+
   var content = '<div>'
      + '<table class="tb">'
      + '<thead>'
      + '<tr>'
-     + '<th width="10%"></th>'
-     + '<th>Filename</th>'
-     + '<th>Action</th>'
-     + '</tr>'
-     + '</thead>';
+     + '<th width="10%"></th>';
+
+  for (var index = 0; index < numOfRow; index ++) {
+    content += '<th>Filename</th>' + '<th>Action</th>';
+  }
+
+  content += '</tr>'
+     + '</thead>'
      + '<tbody>';
 
   var medias = obj['files'];
 
-  for (var i = 0; i < medias.length; i ++) {
-
-    var media = medias[i];
-
-    var id = media['id'];
-    var originalUrl = media['url'];
-    var title = media['fulltitle'];
-    var filename = media['filename'];
-
-    var ext = getExt(filename)
-    var mediatype = getMediaType(ext);
-    var type = getType(mediatype);
-
-    var url = 'files/' + id + '/' + filename;
-    var newFilename = title + '.' + ext;
-
-    var file = [id, url, type, mediatype, title];
-
-    files.push(file);
+  for (var row = 0; row < medias.length / numOfRow; row ++) {
 
     content += '<tr>';
-    content += '<th>' + (i+1) + '</th>';
-    content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + title + '</a></td>';
-    content += '<td>';
-    content += '<p><a href="' + url + '" class="btn" data-clipboard-text="' + newFilename + '" download="' + newFilename + '">Download</a></p>';
-    content += '<p><a href="#" onclick="confirmToDeleteFile(' + i + '); return false;">Delete</a></p>';
-    content += '<p><a href="#" onclick="confirmToReloadFile(' + i + '); return false;">Reload</a></p>';
-    content += '</td>';
+    content += '<th>' + (row+1) + '</th>';
+
+    for (var index = 0; index < numOfRow; index ++) {
+
+      var i = numOfRow * row + index;
+      if (i >= medias.length) {
+        break;
+      }
+
+      var media = medias[i];
+
+      var id = media['id'];
+      var originalUrl = media['url'];
+      var title = media['fulltitle'];
+      var filename = media['filename'];
+
+      var ext = getExt(filename)
+      var mediatype = getMediaType(ext);
+      var type = getType(mediatype);
+
+      var url = 'files/' + id + '/' + filename;
+      var newFilename = title + '.' + ext;
+
+      var file = [id, url, type, mediatype, title];
+
+      files.push(file);
+
+      content += '<td><a href="#" onclick="playFile(' + i + '); return false;">' + title + '</a></td>';
+      content += '<td>';
+      content += '<p><a href="' + url + '" class="btn" data-clipboard-text="' + newFilename + '" download="' + newFilename + '">Download</a></p>';
+      content += '<p><a href="#" onclick="confirmToDeleteFile(' + i + '); return false;">Delete</a></p>';
+      content += '<p><a href="#" onclick="confirmToReloadFile(' + i + '); return false;">Reload</a></p>';
+      content += '</td>';
+    }
+
     content += '</tr>';
   }
 
   content += '</tbody></table></div>';
 
-  document.getElementById('files').innerHTML = content;
+  element.innerHTML = content;
 }
 
 function onError() {
