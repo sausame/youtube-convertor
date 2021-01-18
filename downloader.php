@@ -80,7 +80,9 @@ class Downloader {
 			return false;
 		}
 
-		$data = "{\"id\": \"" . $this->id . "\", \"url\": \"" . $this->url . "\", \"fulltitle\": \"". $this->fulltitle . "\", \"filename\": \"". $filename . "\"}";
+		$size = filesize($this->savePath . "/" . $filename);
+
+		$data = "{\"id\": \"" . $this->id . "\", \"url\": \"" . $this->url . "\", \"fulltitle\": \"". $this->fulltitle . "\", \"filename\": \"". $filename . "\", \"filesize\": ". $size . "}";
 
 		fwrite($fp, $data);
 		@fclose($fp);
