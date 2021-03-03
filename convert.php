@@ -9,7 +9,10 @@ $id = getParamOrExit('id');
 $url = getParamOrExit('url');
 $fulltitle = getParamOrExit('fulltitle');
 
-$downloader = new Downloader('config.ini', $id, $url, $fulltitle);
+$downloader = new Downloader('config.ini');
+$downloader->setId($id);
+$downloader->setUrl($url);
+$downloader->setFulltitle($fulltitle);
 
 $type = getParamOrExit('type');
 
