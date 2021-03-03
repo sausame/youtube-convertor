@@ -4,6 +4,7 @@ include_once('files.php');
 include_once('rpc.php');
 include_once('utils.php');
 include_once('network.php');
+include_once('convertor.php');
 
 class Downloader {
 
@@ -109,14 +110,32 @@ class Downloader {
 
 		$imgUrl = $obj["thumbnail"];
 		if ($imgUrl) {
-			$pos = strrpos($imgUrl, '/');
-			if ($pos) {
-				$filename = substr($imgUrl, $pos + 1);
-				$savePath = $this->saveDir . '/' . $filename;
-
-				saveRemoteFile($savePath, $imgUrl);
-				$imgUrl = 'files/' . $filename;
+			$start = strrpos($imgUrl, '/');
+			if ($start) {
+				$start ++;
+			} else {
+				$start = 0;
 			}
+
+			$end = strpos($imgUrl, '?', $start);
+
+			if ($end) {
+				$len = $end - $start;
+			} else {
+				$len = null;
+			}
+
+			$filename = substr($imgUrl, $start, $len);
+			$savePath = $this->saveDir . '/' . $filename;
+
+			saveRemoteFile($savePath, $imgUrl);
+
+			$filename = 'thumbnail.jpg';
+			$imagePath = $this->saveDir . '/' . $filename;
+
+			Convertor::convertMediafile($savePath, $imagePath);
+
+			$imgUrl = 'files/' . $filename;
 		}
 
 		$fulltitle = $obj["fulltitle"];

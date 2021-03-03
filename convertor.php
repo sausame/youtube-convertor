@@ -90,6 +90,17 @@ class Convertor {
 
 		return $filename;
 	}
+
+	public static function convertMediafile($srcFilename, $destFilename) {
+
+		$cmd = "ffmpeg -y -i '$srcFilename' '$destFilename'";
+		runCommand($cmd, $retval);
+
+		unlinkPath("$srcFilename");
+
+		return $destFilename;
+	}
+
 }
 
 ?>
