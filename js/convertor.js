@@ -60,6 +60,41 @@ function updateAudioQualities(maxAbr) {
   document.getElementById('audio-quality').innerHTML = content;
 }
 
+function updateSpeed() {
+
+  var content = '<div>'
+     + '<table class="tb">'
+     + '<thead>'
+     + '<tr>'
+     + '<th width="20%">Speed</td>'
+     + '<th>VALUE</td>'
+     + '</tr>'
+     + '</thead>';
+     + '<tbody>';
+
+  var values = [ 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2 ];
+
+  for (var i = 0; i < values.length; i ++) {
+
+    var id = 'speed-' + i;
+    var value = values[i];
+    var checked = '';
+
+    if (1 == value) {
+      checked = 'checked';
+    }
+
+    content += '<tr>';
+    content += '<th><input id="' + id + '" type="radio" name="speed" value="' + value + '" ' + checked + '/></th>';
+    content += '<td><label for="' + id + '">' + value + '</label></td>\n';
+    content += '</tr>';
+  }
+
+  content += '</tbody></table></div>';
+
+  document.getElementById('speed').innerHTML = content;
+}
+
 function humanFileSize(bytes, si=true) {
 
   var thresh = si ? 1000 : 1024;
@@ -163,6 +198,8 @@ function onInforSucceed(infor, content) {
   updateAudioQualities(infor.getValue('abr'));
 
   document.getElementById('selection').style.display = 'block';
+
+  updateSpeed();
 
   showTab('normal-tab');
 }

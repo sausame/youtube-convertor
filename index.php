@@ -42,6 +42,7 @@ if (! empty($url)) {
    <div id="video-framerate" class="tabcontent"></div>
    <div id="audio" class="tabcontent"></div>
    <div id="audio-quality" class="tabcontent"></div>
+   <div id="speed"></div>
    <div id="convertor-button"></div>
   </div>
 <?php
