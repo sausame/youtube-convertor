@@ -8,6 +8,7 @@ openlog("Convertor", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 $id = getParamOrExit('id');
 $url = getParamOrExit('url');
 $fulltitle = getParamOrExit('fulltitle');
+$speed = getParamOrExit('speed');
 
 $downloader = new Downloader('config.ini');
 $downloader->setId($id);
@@ -131,6 +132,10 @@ if ('normal' == $type) {
 }
 
 $duration = time() - $now;
+
+if ($succeeded) {
+	Convertor::changeSpeed($downloader->getPath(), $filename, $speed);
+}
 
 $downloader->saveInformation($filename);
 

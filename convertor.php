@@ -91,6 +91,34 @@ class Convertor {
 		return $filename;
 	}
 
+	public static function changeSpeed($path, $filename, $speed) {
+
+		if (0 == strcasecmp('1', $speed)) {
+			return;
+		}
+
+		$start = strrpos($filename, '.');
+
+		if (! $start) {
+			return;
+		}
+
+		$tempFilename = "temp-$filename";
+
+		$suffix = substr($filename, $start + 1);
+		if (0 == strcasecmp('mp3', $suffix)) {
+			$cmd = "cd $path && ffmpeg -y -i $filename -filter:a \"atempo=$speed\" $tempFilename";
+		} else if (0 == strcasecmp('mp4', $suffix)) {
+			$videoSpeed = number_format(1/(float)$speed, 2, '.', '');
+			$cmd = "cd $path && ffmpeg -y -i $filename -vf \"setpts=$videoSpeed*PTS\" -filter:a \"atempo=$speed\" $tempFilename";
+		} else {
+			return;
+		}
+
+		$cmd = "cd $path && $cmd && mv $tempFilename $filename";
+		runCommand($cmd, $retval);
+	}
+
 	public static function convertMediafile($srcFilename, $destFilename) {
 
 		$cmd = "ffmpeg -y -i '$srcFilename' '$destFilename'";

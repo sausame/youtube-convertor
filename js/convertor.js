@@ -377,6 +377,22 @@ function sendRequest(infor) {
   xhr.send(payload);
 }
 
+function getRadioSelected(elementId) {
+  var element = document.getElementById(elementId);
+  var radios = element.getElementsByTagName('input');
+
+  for (var j = 0; j < radios.length; j ++) {
+
+    var radio = radios[j];
+
+    if (radio.type === 'radio' && radio.checked) {
+      return radio.value;
+    }
+  }
+
+  return null;
+}
+
 function convert(infor, type) {
 
   var map = {
@@ -390,22 +406,18 @@ function convert(infor, type) {
 
   for (i = 0; i < ids.length; i ++) {
 
-    var element = document.getElementById(ids[i]);
-    var radios = element.getElementsByTagName('input');
-
-    for (var j = 0; j < radios.length; j ++) {
-
-      var radio = radios[j];
-
-      if (radio.type === 'radio' && radio.checked) {
-
-        infor.setValue(ids[i], radio.value);
+    var elementId = ids[i];
+    var value = getRadioSelected(elementId);
+    if (null != value) {
+        infor.setValue(elementId, value);
         count ++;
-      }
-    }
+	}
   }
 
   infor.setValue('type', type);
+
+  var value = getRadioSelected('speed');
+  infor.setValue('speed', value);
 
   if (count == ids.length) {
     timer = setInterval(function () { sendRequest(infor); }, 1000);
