@@ -6,21 +6,31 @@ $config = parse_ini_file('config.ini');
 $savePath = $config['save-path'];
 
 $files = scanFolder($savePath, false, true);
-$num = sizeof($files);
+$count = sizeof($files);
+$num = 0;
 
-echo('{"num": '.$num.', "files": [');
+echo('{"files": [');
 
-for ($i = 0; $i < $num; $i ++) {
+for ($i = 0; $i < $count; $i ++) {
 
-	if ($i > 0) {
+	$path = $savePath . '/' . $files[$i] . '/information.json';
+	$content = file_get_contents($path);
+	$content = trim($content);
+
+	if ('' === $content) {
+		continue;
+	}
+
+	if ($num > 0) {
 		echo(', ');
 	}
 
-	$path = $savePath . '/' . $files[$i] . '/information.json';
+	$num ++;
+
 	echo(file_get_contents($path));
 }
 
-echo(']}');
+echo('], "num": '.$num.'}');
 
 ?>
 
